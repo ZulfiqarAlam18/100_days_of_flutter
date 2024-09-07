@@ -32,17 +32,17 @@ class MyAppState extends State<Home> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        child: ElevatedButton(
+        child: TextButton(
           onPressed: (){},child: Text(
           'Click me'
         ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.all(26.9),
-            textStyle: TextStyle(fontSize: 40)
-
-          ),
+          // style: TextButton.styleFrom(
+          //   backgroundColor: Colors.black,
+          //   foregroundColor: Colors.white,
+          //   padding: EdgeInsets.all(26.9),
+          //  // textStyle: TextStyle(fontSize: 40)
+          //
+          // ),
         )
       ),
     );
