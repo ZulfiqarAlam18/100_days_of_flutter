@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const TabBarExample());
+void main() {
+  runApp(const BasicWidgets());
+}
 
-class TabBarExample extends StatelessWidget {
-  const TabBarExample({super.key});
+class BasicWidgets extends StatelessWidget {
+  const BasicWidgets({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Form Example',
       home: Home(),
     );
   }
@@ -17,72 +20,77 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  MyAppState createState() => MyAppState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class MyAppState extends State<Home> {
+  // Define a GlobalKey to uniquely identify the Form widget
+  final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this); // Initialize controller with 3 tabs
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose(); // Dispose of controller when the widget is destroyed
-    super.dispose();
-  }
+  // Define variables to hold input field values
+  String? _name;
+  String? _email;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TabBar Example'),
-
-        // bottom: TabBar(
-        //   controller: _tabController,
-        //   tabs: const [
-        //     Tab(icon: Icon(Icons.home), text: "Home"),
-        //     Tab(icon: Icon(Icons.search), text: "Search"),
-        //     Tab(icon: Icon(Icons.person), text: "Profile"),
-        //   ],
-        //   indicatorColor: Colors.blue, // Customize tab indicator color
-        // ),
-
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(icon: Icon(Icons.home),text: 'Home',),
-            Tab(icon: Icon(Icons.search),text: 'Search',),
-            Tab(icon: Icon(Icons.person),text: 'person',),
-            Tab(icon:Icon(Icons.contact_mail),text: 'Contact ',)
-          ],
-        ),
-
-
+        title: const Text('Form Widget Example'),
+        centerTitle: true,
         backgroundColor: Colors.teal,
       ),
-      // body: TabBarView(
-      //   controller: _tabController,
-      //   children: const [
-      //     Center(child: Text('Home Content')),
-      //     Center(child: Text('Search Content')),
-      //     Center(child: Text('Profile Content')),
-      //   ],
-      // ),
-
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          Text('Home'),
-          Text('Search'),
-          Text('profile'),
-          Text('good'),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey, // Assign the GlobalKey to the Form widget
+          child: Column(
+            children: <Widget>[
+              // TextFormField for Name
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _name = value;
+                },
+              ),
+              const SizedBox(height: 20),
+              // TextFormField for Email
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _email = value;
+                },
+              ),
+              const SizedBox(height: 40),
+              // Submit Button
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    // Process the form data (e.g., send to server)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Form submitted successfully!')),
+                    );
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
+        ),
       ),
-
     );
   }
 }
