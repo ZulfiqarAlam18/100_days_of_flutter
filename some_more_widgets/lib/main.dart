@@ -1,96 +1,67 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const BasicWidgets());
-}
+void main() => runApp(const ListViewExample());
 
-class BasicWidgets extends StatelessWidget {
-  const BasicWidgets({super.key});
+class ListViewExample extends StatelessWidget {
+  const ListViewExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Form Example',
-      home: Home(),
+      title: 'ListView Example',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Messages'),
+          backgroundColor: Colors.teal,
+        ),
+        body: const MessageList(),
+      ),
     );
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class MessageList extends StatelessWidget {
+  const MessageList({super.key});
 
-  @override
-  MyAppState createState() => MyAppState();
-}
-
-class MyAppState extends State<Home> {
-  // Define a GlobalKey to uniquely identify the Form widget
-  final _formKey = GlobalKey<FormState>();
-
-  // Define variables to hold input field values
-  String? _name;
-  String? _email;
+  // A list of dummy data (names and messages)
+  final List<Map<String, String>> messages = const [
+    {'name': 'John', 'message': 'Hey, how are you?'},
+    {'name': 'Sarah', 'message': 'Did you get my email?'},
+    {'name': 'Mike', 'message': 'Let\'s catch up soon!'},
+    {'name': 'Emma', 'message': 'Meeting postponed to 3 PM.'},
+    {'name': 'Sophia', 'message': 'Can we reschedule?'},
+    {'name': 'Daniel', 'message': 'I finished the project.'},
+    {'name': 'Olivia', 'message': 'Don’t forget the meeting tomorrow.'},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Form Widget Example'),
-        centerTitle: true,
-        backgroundColor: Colors.teal,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey, // Assign the GlobalKey to the Form widget
-          child: Column(
-            children: <Widget>[
-              // TextFormField for Name
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _name = value;
-                },
-              ),
-              const SizedBox(height: 20),
-              // TextFormField for Email
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _email = value;
-                },
-              ),
-              const SizedBox(height: 40),
-              // Submit Button
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Process the form data (e.g., send to server)
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Form submitted successfully!')),
-                    );
-                  }
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+    return ListView.builder(
+      itemCount: messages.length, // The number of items in the list
+      itemBuilder: (context, index) {
+        // Fetching the name and message for each item
+        final name = messages[index]['name']!;
+        final message = messages[index]['message']!;
+
+        return Card(
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Text(name[0]), // Display the first letter of the name
+              backgroundColor: Colors.teal,
+              foregroundColor: Colors.white,
+            ),
+            title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(message),
+            trailing: const Icon(Icons.message),
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Tapped on $name\'s message'),
+              ));
+            },
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
