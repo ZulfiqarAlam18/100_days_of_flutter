@@ -8,6 +8,8 @@ class ViewTasksScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('View All Tasks'),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: tasks.length,

@@ -1,40 +1,49 @@
-
-
-
 import 'package:flutter/material.dart';
 
 class DeleteTaskScreen extends StatefulWidget {
-  @override
-  _DeleteTaskScreenState createState() => _DeleteTaskScreenState();
+
+  MyAppState createState() => MyAppState();
 }
 
-class _DeleteTaskScreenState extends State<DeleteTaskScreen> {
-  List<String> tasks = ['Task 1', 'Task 2', 'Task 3'];
+class MyAppState extends State <DeleteTaskScreen>{
+  List <String> tasks = ['Task1','Task2','Task3'];
+  String count ='';
 
-  void _deleteTask(int index) {
+  void _deleteTask(int index){
     setState(() {
+      count = (index+1).toString();
       tasks.removeAt(index);
+      int c = index+1;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task number $c Deleted')));
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delete Task'),
+        title: const Text('ADD Tasks'),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(tasks[index]),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => _deleteTask(index),
-            ),
-          );
-        },
-      ),
+      body: ListView.builder(itemCount: tasks.length,itemBuilder: (context,index){
+        return ListTile(
+          title: Text(tasks[index]),
+          //subtitle: Text(tasks[index]),
+          trailing: IconButton(onPressed:() => _deleteTask(index), icon: Icon(Icons.delete)),
+        );
+      })
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+

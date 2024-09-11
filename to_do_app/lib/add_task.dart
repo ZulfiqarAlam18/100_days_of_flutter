@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:to_do_app/main.dart';
 
 class AddTaskScreen extends StatefulWidget {
   
@@ -20,6 +17,7 @@ class MyAppState extends State <AddTaskScreen>{
     setState(() {
       tasks.add(_taskController.text);
       _taskController.clear();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task Added')));
     });
   }
 
@@ -28,6 +26,7 @@ class MyAppState extends State <AddTaskScreen>{
       appBar: AppBar(
         title: const Text('ADD Tasks'),
         backgroundColor: Colors.teal,
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -43,7 +42,8 @@ class MyAppState extends State <AddTaskScreen>{
 
             ),
             SizedBox(height: 20,),
-            ElevatedButton(onPressed: _addTask, child: const Text('Add'))
+            ElevatedButton(onPressed: _addTask
+                , child: const Text('Add'))
           ],
         ),
       ),
