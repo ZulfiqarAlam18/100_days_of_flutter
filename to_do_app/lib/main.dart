@@ -1,76 +1,65 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'add_task.dart';
+import 'delete_task.dart';
+import 'view_tasks.dart';
 
-void main(){
+void main() {
   runApp(const ToDo());
 }
+
 class ToDo extends StatelessWidget {
   const ToDo({super.key});
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ToDo',
-      home: Home(),
+      home: const Home(),  // Sets the home screen directly
+      routes: {
+        'add': (context) => AddTaskScreen(),
+        'delete': (context) => DeleteTaskScreen(),
+        'view': (context) => ViewTasksScreen(),
+      },
     );
   }
 }
-class Home extends StatefulWidget{
+
+class Home extends StatefulWidget {
   const Home({super.key});
+
   @override
   MyAppState createState() => MyAppState();
 }
-class MyAppState extends State <Home> {
-  final _key = GlobalKey <FormState>();
-  String? name;
-  String? mail;
 
+class MyAppState extends State<Home> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: const Text('MY Task Tracker'),
-      centerTitle: true,
-      backgroundColor: Colors.teal,
-
-    ),
-    body: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _key,
+      appBar: AppBar(
+        title: const Text('ToDo'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      backgroundColor: Colors.white,
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Enter Name'),
-              validator: (value){
-                if (value == null || value.isEmpty){
-                  return 'Please Enter Name';
-                }
-                return null;
-              },
-              onSaved: (value){
-                name = value;
-              },
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, 'add'),
+              child: const Text('Add Task'),
             ),
-
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Enter mail Address'),
-              validator: (value){
-                if (value == null || value.isEmpty){
-                  return 'Enter A valid mail Address';
-                }
-                return null;
-              },
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, 'delete'),
+              child: const Text('Delete'),
             ),
-            ElevatedButton(onPressed: (){
-              if (_key.currentState!.validate()){
-                _key.currentState!.save();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Form Submitted'),));
-              }
-            }, child: const Text('Sumbit'))
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, 'view'),
+              child: const Text('View Tasks'),
+            ),
           ],
         ),
       ),
-    ),
     );
   }
 }
