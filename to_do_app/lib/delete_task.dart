@@ -21,7 +21,7 @@ class MyAppState extends State <DeleteTaskScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ADD Tasks'),
+        title: const Text('Delete Tasks'),
         backgroundColor: Colors.teal,
         centerTitle: true,
       ),

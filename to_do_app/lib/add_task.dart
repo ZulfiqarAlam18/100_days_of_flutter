@@ -17,17 +17,18 @@ class MyAppState extends State <AddTaskScreen>{
     setState(() {
       tasks.add(_taskController.text);
       _taskController.clear();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task Added')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text('Task Added')));
     });
   }
 
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ADD Tasks'),
+        title: const Text('Add Tasks'),
         backgroundColor: Colors.teal,
         centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -43,7 +44,7 @@ class MyAppState extends State <AddTaskScreen>{
             ),
             SizedBox(height: 20,),
             ElevatedButton(onPressed: _addTask
-                , child: const Text('Add'))
+                , child: const Text('Add Task',style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),)
           ],
         ),
       ),
