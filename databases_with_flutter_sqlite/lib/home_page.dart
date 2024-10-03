@@ -46,15 +46,62 @@ class _HomePageState extends State<HomePage> {
             labelColor: Colors.black,
             unselectedLabelColor: Colors.white,
           ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          actions: [
+            IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
+          ],
         ),
         backgroundColor: Colors.teal[50],
         body: TabBarView(
     children:[
        AddTaskScreen(),
        DeleteTaskScreen(),
-       ViewTasks(),
+       ViewTasks(title: 'TASK1', des: 'It is description of this task . yes it is lenghty ', date: 'RANDOM', time: 'NO TIME', category: 'URGENT'),
     ]
-    )
+    ),
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                DrawerHeader(child: Text('Header'),decoration: BoxDecoration(
+                  color: Colors.teal
+                ),),
+                ListTile(
+                  title: Text('Settings'),
+                  leading: Icon(Icons.settings,color: Colors.teal,),
+                  onTap: (){},
+                ),
+          ListTile(
+            title: Text('About Us'),
+            leading: Icon(Icons.people,color: Colors.teal,),
+            onTap: (){},
+          ),
+          ListTile(
+            title: Text('Contact Us'),
+            leading: Icon(Icons.contact_mail,color: Colors.teal,),
+            onTap: (){},
+          ),
+          ListTile(
+            title: Text('Terms&Conditions'),
+            leading: Icon(Icons.privacy_tip,color: Colors.teal,),
+            onTap: (){},
+          ),
+                ListTile(
+                  title: Text('Share'),
+                  leading: Icon(Icons.share,color: Colors.teal,),
+                  onTap: (){},
+                ),
+                ListTile(
+                  title: Text('Rate'),
+                  leading: Icon(Icons.star,color: Colors.teal,),
+                  onTap: (){},
+                ),
+
+
+              ],
+            ),
+          ),
 
     ),
       );

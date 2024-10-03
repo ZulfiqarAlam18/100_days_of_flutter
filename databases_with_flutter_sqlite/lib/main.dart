@@ -11,6 +11,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MakeIt',
+      theme: ThemeData(
+        //for elevated buttons
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.teal,
+            foregroundColor: Colors.white,
+          )
+        )
+
+
+      ),
       home:  HomePage(),
     );
   }

@@ -1,18 +1,7 @@
+import 'package:databases_with_flutter_sqlite/view_tasks.dart';
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  // String title , des , date ,time , category;
-
-
-  //constructor
-  // HomePage({Key? key,
-  //   required this.title,
-  //   required this.des,
-  //   required this.date,
-  //   required this.time,
-  //   required this.category,
-  //
-  // }) : super(key: key);
 
   const AddTaskScreen({super.key});
 
@@ -21,8 +10,14 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _HomePageState extends State<AddTaskScreen> {
+  final key = GlobalKey <FormState>();
 
-  String? title , des , date ,time , category;
+  String? title, des , date , time , category ;
+ // String title = '';
+ // String  des  = '';
+ // String date = '';
+ // String time = '';
+ // String category = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +27,12 @@ class _HomePageState extends State<AddTaskScreen> {
       body: Padding(
           padding: EdgeInsets.all(8.0),
           child: Form(
+            key: key,
             child: SingleChildScrollView(
               child: Column(
                 children: [
 
-                  // 2 Text Form fields to be coded one for Task Title , second for task descrition along with teal borders , hinted texts validtors ,on saved  methods
-                  // Here is just a sample code, you can add your own logic
+
                   // for title
                   TextFormField(
                     decoration: InputDecoration(
@@ -81,7 +76,7 @@ class _HomePageState extends State<AddTaskScreen> {
                       return null;
                     },
                     onSaved: (value){
-                      title = value;
+                      des = value;
                     },
 
                   ),
@@ -105,7 +100,7 @@ class _HomePageState extends State<AddTaskScreen> {
                       return null;
                     },
                     onSaved: (value){
-                      title = value;
+                      date = value;
                     },
 
                   ),
@@ -129,7 +124,7 @@ class _HomePageState extends State<AddTaskScreen> {
                       return null;
                     },
                     onSaved: (value){
-                      title = value;
+                      time = value;
                     },
 
                   ),
@@ -153,13 +148,27 @@ class _HomePageState extends State<AddTaskScreen> {
                       return null;
                     },
                     onSaved: (value){
-                      title = value;
+                      category = value;
                     },
 
                   ),
                   SizedBox(height:10),
                   // for button
                   ElevatedButton(onPressed: (){
+
+                    if (key.currentState!.validate()){
+                      key.currentState!.save();
+                    }
+
+                    ViewTasks(
+                      title: title ?? '',
+                      des: des ?? '',
+                      date: date ?? '',
+                      time: time ?? '',
+                      category: category ?? '',
+                    );
+
+
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text('Task Saved Successfully'),));
                   },child: Text('Add Task'),),

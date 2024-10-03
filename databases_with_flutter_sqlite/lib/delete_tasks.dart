@@ -34,13 +34,30 @@ class _HomePageState extends State<DeleteTaskScreen> {
                     ),
                     elevation: 12,
                     child: ListTile(
-                        title: Text('Task $index'),
+                        title: Text('Task $index',style: TextStyle(fontWeight: FontWeight.bold),),
+
                         leading: CircleAvatar(
                           radius: 20,
                           child: Text((index + 1).toString()),
                         ),
                         trailing: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.delete)
+                            onPressed: () {}, icon: IconButton(onPressed: (){
+
+                              showDialog(context: context, builder: (context){
+                                return AlertDialog(
+                                  title: Text('Sure to Delete Task'),
+                                  actions: [
+                                    TextButton(onPressed: (){
+                                      Navigator.of(context).pop();
+                                    }, child: Text('Go Back')),
+
+                                    ElevatedButton(onPressed: (){}, child: const Text('Delete')),
+                                  ],
+                                  backgroundColor: Colors.teal[50],
+                                );
+                              });
+
+                        },icon: Icon(Icons.delete),)
                         )
                     )
 
