@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     children:[
        AddTaskScreen(),
        DeleteTaskScreen(),
-       ViewTasks(title: 'TASK1', des: 'It is description of this task . yes it is lenghty ', date: 'RANDOM', time: 'NO TIME', category: 'URGENT'),
+       ViewTasks(title: 'TASK1', des: 'It is description of this task . yes it is lenghty slakjfalskjflkasjflsakjflaskdfjlsakfj llksajdfla lkjdslkf kajdlfkja lkalfalk jldskjfla', date: 'RANDOM', time: 'NO TIME', category: 'URGENT'),
     ]
     ),
           drawer: Drawer(
