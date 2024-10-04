@@ -1,158 +1,90 @@
 import 'package:flutter/material.dart';
 
-class ViewTasks extends StatefulWidget {
-  String title, des, date, time, category;
+class ViewTasks extends StatelessWidget {
+  final String title;
+  final String des;
+  final String date;
+  final String time;
+  final String category;
 
-  ViewTasks({
+  const ViewTasks({
+    Key? key,
     required this.title,
     required this.des,
     required this.date,
     required this.time,
     required this.category,
-  });
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<ViewTasks> {
-  //final String title , des , date ,time , category;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.teal[50],
-        body: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      side: BorderSide(color: Colors.teal, width: 2.0)),
-                  elevation: 12,
-                  child: ListTile(
-                    title: Text(
-                      widget.title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(widget.des),
-                    leading: CircleAvatar(
-                      radius: 20,
-                      child: Text((index + 1).toString()),
-                    ),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text(
-                                'Task Details',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              backgroundColor: Colors.teal[50],
-                              content: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: Colors.white,
-                                  ),
-                                  height: 200,
-                                  width: 150,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(36.0),
-                                    child: Center(
-                                      child: Column(children: [
-                                        Row(
-                                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Task Title:',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(widget.title),
-                                          ],
-                                        ),
-                                        Row(
-                                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Date:',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(widget.date),
-                                          ],
-                                        ),
-                                        Row(
-                                          //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Time:',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(widget.time),
-                                          ],
-                                        ),
-                                        Row(
-                                          //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Category:',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(widget.category),
-                                          ],
-                                        ),
-                                        Row(
-                                          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text('Des:',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Card(
-                                              child: Text(widget.des),
-                                            )
-                                          ],
-                                        ),
-                                      ]),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {},
-                                    child: const Text('Edit Task')),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Close'))
-                              ],
-                            );
-                          });
-                    },
+      appBar: AppBar(
+        title: Text('View Task'),
+        backgroundColor: Colors.teal,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: Colors.teal, width: 2.0),
+          ),
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Title: $title',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
                   ),
-                );
-              }),
-        ));
+                ),
+                SizedBox(height: 10),
+
+                // Handling long description using Flexible and SingleChildScrollView
+                Text(
+                  'Description:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(height: 5),
+
+                // Description section inside a scrollable area
+                Container(
+                  constraints: BoxConstraints(
+                    maxHeight: 150.0, // Adjust height as needed
+                  ),
+                  padding: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.teal[50],
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(color: Colors.teal, width: 1.5),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      des,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 10),
+                Text('Date: $date'),
+                SizedBox(height: 5),
+                Text('Time: $time'),
+                SizedBox(height: 5),
+                Text('Category: $category'),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
