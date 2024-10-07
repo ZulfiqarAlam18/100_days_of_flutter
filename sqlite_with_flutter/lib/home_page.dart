@@ -26,8 +26,7 @@ class  MyAppState extends State <HomePage> {
           children: [
             ElevatedButton(onPressed: (){}, child: Text('Add Task')),
             ElevatedButton(onPressed: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context))=> ShowTasks());
+             // Navigator.push(context, MaterialPageRoute(builder: (context))=> ShowTasks());
             }, child: Text('View Tasks')),
             ElevatedButton(onPressed: (){}, child: Text('Delete All tasks')),
 

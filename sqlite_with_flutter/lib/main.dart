@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sqlite_with_flutter/add_todo.dart';
 import 'package:sqlite_with_flutter/home_page.dart';
+import 'package:sqlite_with_flutter/show_tasks_screen.dart';
 
 void main(){
 
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'ToDo',
-      home: HomePage(),
+      home: ShowTasksScreen(),
     );
   }
 }
