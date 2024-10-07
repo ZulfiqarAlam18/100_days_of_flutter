@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqlite_with_flutter/home_page.dart';
 
 void main(){
 
@@ -10,7 +11,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   Widget build(BuildContext context) {
     return MaterialApp(
-
+        title: 'ToDo',
+      home: HomePage(),
     );
   }
 }
