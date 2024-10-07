@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_with_flutter/add_todo.dart';
-import 'package:sqlite_with_flutter/home_page.dart';
 import 'package:sqlite_with_flutter/show_tasks_screen.dart';
 
 void main(){

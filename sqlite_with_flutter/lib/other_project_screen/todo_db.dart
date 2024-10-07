@@ -1,6 +1,5 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqlite_with_flutter/todo_model.dart';
 
 class TodoDatabase {
   static const _dbName = 'todo.db';
@@ -21,8 +20,8 @@ class TodoDatabase {
   Future<Database> _initDatabase() async {
     final db = await openDatabase(join(await getDatabasesPath(), _dbName),
         version: 1, onCreate: (db, version) async {
-          await db.execute(
-            """
+      await db.execute(
+        """
         CREATE TABLE $_tableName (
           $_columnId INTEGER PRIMARY KEY AUTOINCREMENT,
           $_columnTitle TEXT NOT NULL,
@@ -30,25 +29,25 @@ class TodoDatabase {
           $_columnDate TEXT NOT NULL
         )
         """,
-          );
-        });
+      );
+    });
     return db;
   }
 
-  Future<List<TaskModelClass>> getAllTodos() async {
+  Future<List<Todo>> getAllTodos() async {
     final db = await database;
     final todoMaps = await db.query(_tableName);
 
-    List<TaskModelClass> todos = [];
+    List<Todo> todos = [];
 
     for (var map in todoMaps) {
-      var todo = TaskModelClass.fromMap(map);
+      var todo = Todo.fromMap(map);
       todos.add(todo);
     }
     return todos;
   }
 
-  insertTodo(TaskModelClass todo) async {
+  insertTodo(Todo todo) async {
     final db = await database;
     return await db.insert(
       _tableName,
@@ -57,7 +56,7 @@ class TodoDatabase {
     );
   }
 
-  updateTodo(TaskModelClass todo) async {
+  updateTodo(Todo todo) async {
     final db = await database;
     return await db.update(
       _tableName,
