@@ -1,96 +1,77 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sqlite_with_flutter/main.dart';
+import 'package:sqlite_with_flutter/todo.dart';
+import 'package:sqlite_with_flutter/todo_db.dart';
 
-class AddTasksScreen extends StatefulWidget{
-  const AddTasksScreen({super.key});
+class AddTodo extends StatefulWidget {
+  const AddTodo({super.key});
 
   @override
-  MyAppState createState() => MyAppState();
-
+  State<AddTodo> createState() => _AddTodoState();
 }
 
-class  MyAppState extends State <AddTasksScreen> {
-  final key = GlobalKey <FormState> ();
-
-  String? title;
-  String? des;
-
+class _AddTodoState extends State<AddTodo> {
+  final GlobalKey<FormState> _key = GlobalKey();
+  final TextEditingController tc = TextEditingController();
+  final TextEditingController dc = TextEditingController();
+  DateTime date = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Here are your tasks'),
-          centerTitle: true,
+      appBar: AppBar(
+        title: const Text("Todo App"),
+      ),
+      body: Form(
+        key: _key,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: tc,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Title",
+              ),
+            ),
+            TextFormField(
+              controller: dc,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Description",
+              ),
+            ),
+            Row(
+              children: [
+                Text(date.toString()),
+                ElevatedButton(
+                  onPressed: () async {
+                    final DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: DateTime(2010),
+                      lastDate: DateTime(2030),
+                    );
+                    setState(() {
+                      if (pickedDate != null) {
+                        date = pickedDate;
+                      }
+                    });
+                  },
+                  child: const Text("Choose Date"),
+                )
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                TodoDatabase db = TodoDatabase();
+                Todo todo =
+                    Todo(title: tc.text, description: dc.text, date: date);
+                await db.insertTodo(todo);
+                Navigator.pop(context);
+              },
+              child: const Text("Add"),
+            ),
+          ],
         ),
-       body: Form(
-         key: key,
-         child: SingleChildScrollView(
-           child: Column(
-             children: [
-               TextFormField(
-                 decoration: InputDecoration(
-                   label: Text('Task Title'),
-                   hintText: 'Enter Task Title',
-                   enabledBorder: OutlineInputBorder(
-                     borderRadius: BorderRadius.circular(12),
-                     borderSide: BorderSide(
-                       color: Colors.teal,
-                       width: 2.0,
-                     )
-                   )
-                 ),
-
-                 validator: (value){
-                   if ( value == null || value.isEmpty){
-                     return 'Enter Task Title';
-                   }
-                   return null;
-                 },
-                 onSaved: (value){
-                   title = value;
-                 },
-               ),
-               SizedBox(height: 10,),
-               TextFormField(
-                 decoration: InputDecoration(
-                     label: Text('Task Description'),
-                     hintText: 'Enter Task Description',
-                     enabledBorder: OutlineInputBorder(
-                         borderRadius: BorderRadius.circular(12),
-                         borderSide: BorderSide(
-                           color: Colors.teal,
-                           width: 2.0,
-                         )
-                     )
-                 ),
-
-                 validator: (value){
-                   if ( value == null || value.isEmpty){
-                     return 'Enter Task description';
-                   }
-                   return null;
-                 },
-                 onSaved: (value){
-                   des = value;
-                 },
-               ),
-               SizedBox(height: 10,),
-               ElevatedButton(onPressed: (){
-                 if (key.currentState!.validate()){
-                   key.currentState!.save();
-                 }
-                 ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(content: Text('Task Sumbitted Successfully')));
-               }, child: Text('Submit Task')),
-               SizedBox(height: 10,),
-
-             ],
-           ),
-         ),
-       ),
+      ),
     );
-
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lab10_maam/todo.dart';
-import 'package:lab10_maam/todo_db.dart';
+import 'package:sqlite_with_flutter/todo.dart';
+import 'package:sqlite_with_flutter/todo_db.dart';
 
 import 'add_todo.dart';
 
@@ -63,12 +63,15 @@ class _TodoScreenState extends State<TodoScreen> {
                     MaterialPageRoute(
                       builder: (context) => const AddTodo(),
                     ),
-                  );
+                  ).then((_) => {_loadTodos()});
                 },
                 child: const Text("Add Task"),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  db.deleteAllTodo();
+                  _loadTodos();
+                },
                 child: const Text("Delete All"),
               ),
             ],
