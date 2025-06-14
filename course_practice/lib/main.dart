@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'getx_practice/controller.dart';
+import 'getx_navigation/home_screen.dart';
+import 'getx_navigation/second_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final CounterController controller = Get.put(CounterController());
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('GetX Counter')),
-        body: Center(
-          child: Obx(() => Text(
-            'Count: ${controller.count}',
-            style: TextStyle(fontSize: 30),
-          )),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: controller.increment,
-          child: Icon(Icons.add),
-        ),
-      ),
+    return GetMaterialApp( // Use GetMaterialApp instead of MaterialApp
+      debugShowCheckedModeBanner: false,
+      title: 'GetX Navigation Example',
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/second', page: () => const SecondScreen()),
+      ],
     );
   }
 }
