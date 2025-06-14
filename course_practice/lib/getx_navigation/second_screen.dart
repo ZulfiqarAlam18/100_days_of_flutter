@@ -16,8 +16,14 @@ class SecondScreen extends StatelessWidget {
           },
         ),
       ),
-      body: const Center(
-        child: Text("This is the second screen"),
+
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Get.toNamed('/third'); // Navigate using GetX
+          },
+          child: const Text("Go to Third Screen"),
+        ),
       ),
     );
   }
