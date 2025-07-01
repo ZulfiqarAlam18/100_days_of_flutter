@@ -36,6 +36,8 @@
 
 // learning dart basics
 
+import 'dart:io';
+
 int a = 10;
 void square(a){
 
@@ -52,6 +54,9 @@ int c = a + b ;
 print(c);
   print('hello word');
   square(5);
+
+ // stdout.write('Hello My Dear');
+  print('Zulfiqar');
 
 
 }
