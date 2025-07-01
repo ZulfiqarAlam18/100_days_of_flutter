@@ -1,33 +1,57 @@
-import 'package:course_practice/api_integration/screens/user_screen.dart';
-import 'package:course_practice/getx_navigation/third_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:course_practice/api_integration/screens/user_screen.dart';
+// import 'package:course_practice/getx_navigation/third_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+//
+// import 'getx_navigation/home_screen.dart';
+// import 'getx_navigation/second_screen.dart';
+//
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp( // Use GetMaterialApp instead of MaterialApp
+//       debugShowCheckedModeBanner: false,
+//       title: 'GetX Navigation Example',
+//
+//       initialRoute: '/',
+//       getPages: [
+//         GetPage(name: '/', page: () => const UserScreen()),
+//         GetPage(name: '/second', page: () => const SecondScreen()),
+//         GetPage(name: '/third', page: () => const ThirdScreen()),
+//       ],
+//
+//
+//     );
+//   }
+//
+// }
 
-import 'getx_navigation/home_screen.dart';
-import 'getx_navigation/second_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+
+// learning dart basics
+
+int a = 10;
+void square(a){
+
+  print(a*a);
+
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp( // Use GetMaterialApp instead of MaterialApp
-      debugShowCheckedModeBanner: false,
-      title: 'GetX Navigation Example',
-
-      initialRoute: '/',
-      getPages: [
-        GetPage(name: '/', page: () => const UserScreen()),
-        GetPage(name: '/second', page: () => const SecondScreen()),
-        GetPage(name: '/third', page: () => const ThirdScreen()),
-      ],
+void main(){
 
 
-    );
-  }
+int a = 10;
+int b = 20;
+
+int c = a + b ;
+print(c);
+  print('hello word');
+  square(5);
+
 
 }
