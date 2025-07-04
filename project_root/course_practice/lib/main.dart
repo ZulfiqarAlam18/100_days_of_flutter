@@ -79,6 +79,40 @@ print(c);
   print(height);
   print(weight);  
 
+// loops
+  for(int i = 0; i < 10; i++){
+    print(i);
+  }
+
+  int j = 0;
+  while(j < 10){
+    print(j);
+    j++;
+  }
+
+  do{
+    print(j);
+    j++;
+  }while(j < 20);
+
+  // if else
+  if(age > 18){
+    print('You are an adult');
+  }else{
+    print('You are a minor');
+  }
+  // switch case
+  switch(age){
+    case 18:
+      print('You are 18');
+      break;
+    case 20:
+      print('You are 20');
+      break;
+    default:
+      print('You are not 18 or 20');    
+
+    
 
 
 }
