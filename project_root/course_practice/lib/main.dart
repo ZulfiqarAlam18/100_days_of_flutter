@@ -58,5 +58,27 @@ print(c);
  // stdout.write('Hello My Dear');
   print('Zulfiqar');
 
+  
+  // const , final , static 
+  const String name = 'Zulfiqar';
+  final String name2 = 'Zulfiqar';
+  static String name3 = 'Zulfiqar';
+  print(name);
+  print(name2);
+  print(name3); 
+  // var , dynamic
+  var name4 = 'Zulfiqar';
+  dynamic name5 = 'Zulfiqar';
+  print(name4);
+  print(name5);
+  // int , double , num
+  int age = 20;
+  double height = 5.9;
+  num weight = 70.5;
+  print(age);
+  print(height);
+  print(weight);  
+
+
 
 }
