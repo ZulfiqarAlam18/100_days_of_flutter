@@ -112,7 +112,12 @@ print(c);
     default:
       print('You are not 18 or 20');    
 
-    
+
+
+  //dart lamda functions
+  var square = (int x) => x * x;
+print(square(5)); // Output: 25
+  
 
 
 }
