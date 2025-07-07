@@ -1,18 +1,21 @@
-class UserModel {
+// models/user_model.dart
+class User {
+  final int id;
   final String name;
   final String email;
 
-  UserModel({required this.name, required this.email});
+  User({required this.id, required this.name, required this.email});
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      name: json['name'],
-      email: json['email'],
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'Unknown',
+      email: json['email'] ?? 'No email',
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'name': name,
-    'email': email,
-  };
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, email: $email}';
+  }
 }

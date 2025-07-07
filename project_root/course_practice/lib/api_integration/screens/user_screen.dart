@@ -1,90 +1,89 @@
+// screens/user_list_screen.dart
+import 'package:course_practice/api_integration/services/user_services.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
-import '../services/user_services.dart';
 
-class UserScreen extends StatefulWidget {
-  const UserScreen({super.key});
+class UserListScreen extends StatefulWidget {
+  const UserListScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserScreen> createState() => _UserScreenState();
+  State<UserListScreen> createState() => _UserListScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
-  List<UserModel> users = [];
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
+class _UserListScreenState extends State<UserListScreen> {
+  late Future<List<User>> futureUsers;
 
   @override
   void initState() {
     super.initState();
-    loadUsers();
+    futureUsers = ApiService.fetchUsers();
   }
 
-  Future<void> loadUsers() async {
-    try {
-      users = await ApiService.getUsers();
-      setState(() {});
-    } catch (e) {
-      debugPrint("Error: $e");
-    }
-  }
-
-  Future<void> addUser() async {
-    if (nameController.text.isEmpty || emailController.text.isEmpty) return;
-
-    final newUser = UserModel(
-      name: nameController.text.trim(),
-      email: emailController.text.trim(),
-    );
-
-    await ApiService.createUser(newUser);
-    nameController.clear();
-    emailController.clear();
-    loadUsers();
+  void _refreshUsers() {
+    setState(() {
+      futureUsers = ApiService.fetchUsers();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("User List")),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                ),
-                TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: addUser,
-                  child: const Text("Add User"),
-                ),
-              ],
-            ),
-          ),
-          const Divider(),
-          Expanded(
-            child: users.isEmpty
-                ? const Center(child: Text("No users found."))
-                : ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (_, index) {
-                final user = users[index];
-                return ListTile(
-                  title: Text(user.name),
-                  subtitle: Text(user.email),
-                );
-              },
-            ),
-          ),
+      appBar: AppBar(
+        title: const Text('User List'),
+        actions: [
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _refreshUsers),
         ],
+      ),
+      body: FutureBuilder<List<User>>(
+        future: futureUsers,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Error: ${snapshot.error}',
+                    style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _refreshUsers,
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No users found'));
+          }
+
+          final users = snapshot.data!;
+          return ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              return Card(
+                margin: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      users[index].id.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  title: Text(users[index].name),
+                  subtitle: Text(users[index].email),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
