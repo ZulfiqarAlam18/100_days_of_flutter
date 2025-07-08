@@ -31,7 +31,10 @@ class _UserListScreenState extends State<UserListScreen> {
       appBar: AppBar(
         title: const Text('User List'),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _refreshUsers),
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.teal),
+            onPressed: _refreshUsers,
+          ),
         ],
       ),
       body: FutureBuilder<List<User>>(
@@ -69,6 +72,7 @@ class _UserListScreenState extends State<UserListScreen> {
             itemBuilder: (context, index) {
               return Card(
                 margin: const EdgeInsets.all(8.0),
+                color: Colors.teal[50],
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.blue,
