@@ -1,94 +1,37 @@
-// screens/user_list_screen.dart
-import 'package:course_practice/api_integration/services/user_services.dart';
+import 'package:course_practice/api_integration/controller/user_controller.dart';
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
+import 'package:get/get.dart';
 
-class UserListScreen extends StatefulWidget {
-  const UserListScreen({Key? key}) : super(key: key);
+class UserListScreen extends StatelessWidget {
+  final UserController userController = Get.put(UserController());
 
-  @override
-  State<UserListScreen> createState() => _UserListScreenState();
-}
-
-class _UserListScreenState extends State<UserListScreen> {
-  late Future<List<User>> futureUsers;
-
-  @override
-  void initState() {
-    super.initState();
-    futureUsers = ApiService.fetchUsers();
-  }
-
-  void _refreshUsers() {
-    setState(() {
-      futureUsers = ApiService.fetchUsers();
-    });
-  }
+  UserListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User List'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.teal),
-            onPressed: _refreshUsers,
-          ),
-        ],
-      ),
-      body: FutureBuilder<List<User>>(
-        future: futureUsers,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, size: 64, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Error: ${snapshot.error}',
-                    style: const TextStyle(fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _refreshUsers,
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No users found'));
-          }
+      appBar: AppBar(title: const Text('Users (GET via GetX)')),
+      body: Obx(() {
+        if (userController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          final users = snapshot.data!;
-          return ListView.builder(
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: const EdgeInsets.all(8.0),
-                color: Colors.teal[50],
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: Text(
-                      users[index].id.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  title: Text(users[index].name),
-                  subtitle: Text(users[index].email),
-                ),
-              );
-            },
-          );
-        },
-      ),
+        if (userController.error.isNotEmpty) {
+          return Center(child: Text('Error: ${userController.error}'));
+        }
+
+        return ListView.builder(
+          itemCount: userController.users.length,
+          itemBuilder: (context, index) {
+            final user = userController.users[index];
+            return ListTile(
+              leading: CircleAvatar(child: Text(user.id.toString())),
+              title: Text(user.name),
+              subtitle: Text(user.email),
+            );
+          },
+        );
+      }),
     );
   }
 }
