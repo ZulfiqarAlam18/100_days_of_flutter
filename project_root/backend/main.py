@@ -1,20 +1,43 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+# main.py
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from database import SessionLocal, engine, Base
+import crud
+from models import Student
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Mock database
-users_db = []
+# Enable CORS for Flutter
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change to specific origin in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-class User(BaseModel):
-    name: str
-    email: str
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-@app.get("/users")
-def get_users():
-    return users_db
+@app.get("/students/")
+def read_students(db: Session = Depends(get_db)):
+    return crud.get_students(db)
 
-@app.post("/users")
-def create_user(user: User):
-    users_db.append(user)
-    return {"message": "User added", "user": user}
+@app.post("/students/")
+def create_student(name: str, roll_number: str, year: int, db: Session = Depends(get_db)):
+    return crud.add_student(db, name, roll_number, year)
+
+@app.put("/students/{student_id}")
+def update_student(student_id: int, name: str, roll_number: str, year: int, db: Session = Depends(get_db)):
+    return crud.update_student(db, student_id, name, roll_number, year)
+
+@app.delete("/students/{student_id}")
+def delete_student(student_id: int, db: Session = Depends(get_db)):
+    return crud.delete_student(db, student_id)
