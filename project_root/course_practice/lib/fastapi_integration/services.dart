@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'student_model.dart';
 
 //const String baseUrl = "http://<YOUR-IP>:8000"; // Replace with your IP
-const String baseUrl = "http://10.11.72.172:8000";
+const String baseUrl = "http://10.11.72.148:8000";
 
 
 class StudentService {

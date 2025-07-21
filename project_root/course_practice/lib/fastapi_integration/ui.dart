@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 //const String baseUrl = "http://<YOUR-IP>:8000"; // Replace <YOUR-IP>
 
-const String baseUrl = "http://10.11.72.172:8000";
+const String baseUrl = "http://10.11.72.148:8000";
 
 
 // class Student {

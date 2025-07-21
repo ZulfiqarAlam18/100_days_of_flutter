@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'get_post_practice/screens/student_screen.dart';
+
+import 'fastapi_integration/ui.dart' show StudentScreen;
+//import 'get_post_practice/screens/student_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const StudentScreen(),
+      home:  StudentScreen(),
       debugShowCheckedModeBanner: false,
       // GetX Configuration
       defaultTransition: Transition.cupertino,
