@@ -1,3 +1,5 @@
+import 'package:course_practice/aws_services/home_page.dart';
+import 'package:course_practice/aws_services/image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +39,12 @@ class MyApp extends StatelessWidget {
       // ),
 
 
-      home:  StudentScreen(),
+     // home:  StudentScreen(),
+     // home : ImagePickerExample(),
+
+     home: ImageView(),
+
+
       debugShowCheckedModeBanner: false,
       // GetX Configuration
       defaultTransition: Transition.cupertino,
