@@ -152,7 +152,7 @@ Whether you are a Flutter developer
   //   print('Large plot with area ${area}');
     
   // }
-  // else if (area > 100 && area < 500) {
+  // else if (area >= 100 && area <= 500) {
     
   //       print('Medium plot with area ${area}');
 
@@ -172,6 +172,16 @@ Whether you are a Flutter developer
   height = 5.5;
   
   print(height);
+
+
+  // factorial 
+
+  int n = 5;
+  int fact = 1; 
+  for (int i = 1; i <= n; i++) {
+    fact = fact * i;
+  }
+  print("Factorial of $n is $fact");
   
   
   
