@@ -178,7 +178,7 @@ Whether you are a Flutter developer
 
   int n = 5;
   int fact = 1; 
-  for (int i = 1; i <= n; i++) {
+  for (int i = 1; i <= i; i++) {
     fact = fact * i;
   }
   print("Factorial of $n is $fact");
