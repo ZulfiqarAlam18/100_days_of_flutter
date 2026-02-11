@@ -28,7 +28,7 @@ void atm() {
 
         int remainingAmount = amountInInt;
 
-        if (amountInInt <= 10000 && amountInInt > 1000) {
+        if (amountInInt <= 5000 && amountInInt > 1000) {
           if (amountInInt % 1000 == 0) {
             notesof1k = remainingAmount ~/ 1000;
            notesof1k = notesof1k - 1;
@@ -41,7 +41,7 @@ void atm() {
             notesOf500 = 1;
           }
         } 
-        else if (amountInInt > 10000) {
+        else if (amountInInt > 5000) {
           int remainingAmount = amountInInt;
 
           notesOf5k = remainingAmount ~/ 5000;
