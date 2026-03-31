@@ -1,0 +1,23 @@
+void main(){
+
+    List <StudentModel> list = [];
+
+
+    
+
+
+
+}
+
+
+class StudentModel {
+
+    int id;
+    String name;
+
+
+
+
+
+
+}
